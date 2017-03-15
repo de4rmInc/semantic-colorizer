@@ -165,4 +165,17 @@ namespace SemanticColorizer
             DisplayName = "Semantic Normal Type";
         }
     }
+
+    [Export(typeof(EditorFormatDefinition))]
+    [ClassificationType(ClassificationTypeNames = Constants.EventFormat)]
+    [Name(Constants.EventFormat)]
+    [UserVisible(true)]
+    [Order(After = Priority.Default)]
+    internal sealed class SemanticEventFormat : ClassificationFormatDefinition
+    {
+        public SemanticEventFormat()
+        {
+            this.DisplayName = "Semantic Event";
+        }
+    }
 }

@@ -40,7 +40,7 @@ namespace SemanticColorizer
         private readonly IClassificationType _extensionMethodType;
         private readonly IClassificationType _staticMethodType;
         private readonly IClassificationType _normalMethodType;
-        private IClassificationType _constructorType;
+        private readonly IClassificationType _constructorType;
         private readonly IClassificationType _typeParameterType;
         private readonly IClassificationType _parameterType;
         private readonly IClassificationType _namespaceType;
@@ -48,6 +48,7 @@ namespace SemanticColorizer
         private readonly IClassificationType _localType;
         private readonly IClassificationType _typeSpecialType;
         private readonly IClassificationType _typeNormalType;
+        private readonly IClassificationType _eventType;
         private Cache _cache;
 #pragma warning disable CS0067
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged;
@@ -68,6 +69,7 @@ namespace SemanticColorizer
             _localType = registry.GetClassificationType(Constants.LocalFormat);
             _typeSpecialType = registry.GetClassificationType(Constants.TypeSpecialFormat);
             _typeNormalType = registry.GetClassificationType(Constants.TypeNormalFormat);
+            _eventType = registry.GetClassificationType(Constants.EventFormat);
         }
 
         public IEnumerable<ITagSpan<IClassificationTag>> GetTags(NormalizedSnapshotSpanCollection spans) {
@@ -155,6 +157,9 @@ namespace SemanticColorizer
                         else {
                             yield return id.TextSpan.ToTagSpan(snapshot, _typeNormalType);
                         }
+                        break;
+                    case SymbolKind.Event:
+                        yield return id.TextSpan.ToTagSpan(snapshot, _eventType);
                         break;
                 }
             }
